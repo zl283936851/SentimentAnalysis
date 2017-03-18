@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/context 
+           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+           default-autowire="byName">
+	<!-- 属性文件读入 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>
+					classpath:/conf/properties/config.properties
+				</value>
+			</list>
+		</property>
+	</bean>
+	<bean  id="collectionThread" class="com.sa.service.thread.CollectionThread">
+		<property name="collectionPath" value="${collectionPath}"></property>
+		<property name="analysisResultPath" value="${analysisResultPath}"></property>
+	</bean>
+	<bean  id="musicSearchThread"	class="com.sa.service.thread.MusicSearchThread">
+		<property name="analysisResultPath" value="${analysisResultPath}"></property>
+		<property name="muiscPath">
+			<map>
+				<entry key="1" value="D:\\sentimentAnalysis\\musicResultPath\\1.mp3"/>
+				<entry key="2" value="D:\\sentimentAnalysis\\musicResultPath\\2.mp3"/>
+				<entry key="3"   value="D:\\sentimentAnalysis\\musicResultPath\\3.mp3"/>
+				<entry key="4"    value="D:\\sentimentAnalysis\\musicResultPath\\4.mp3"/>
+				<entry key="5"  value="D:\\sentimentAnalysis\\musicResultPath\\5.mp3"/>
+				<entry key="6"  value="D:\\sentimentAnalysis\\musicResultPath\\6.mp3"/>
+				<entry key="7"  value="D:\\sentimentAnalysis\\musicResultPath\\7.mp3"/>
+				<entry key="8"  value="D:\\sentimentAnalysis\\musicResultPath\\8.mp3"/>
+				<entry key="9"  value="D:\\sentimentAnalysis\\musicResultPath\\9.mp3"/>
+				<entry key="10"  value="D:\\sentimentAnalysis\\musicResultPath\\10.mp3"/>
+			</map>
+		</property>
+	</bean>
+	<bean  id="analysisThread"	class="com.sa.service.thread.AnalysisThread">
+		<property name="analysisResultPath" value="${analysisResultPath}"></property>
+		<property name="analysisSourcePath" value="${analysisSourcePath}"></property>
+		<property name="analysisLearningFile" value="${analysisLearningFile}"></property>
+	</bean>
+	<bean  id="saThreadManager"	class="com.sa.service.thread.SaThreadManager"/>
+	<bean  id="musicService"	class="com.sa.service.music.MusicService"/>
+	
+	<bean id="hellSentimentAnalysisContext"	class="com.sa.HellSentimentAnalysisContext" init-method="init"	lazy-init="false"  />
+	
+</beans>
